@@ -1,0 +1,35 @@
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    # // Public guests may submit RSVP records.
+    # // Do not expose read access from the public website.
+    match /rsvps/{rsvpId} {
+      allow create: if
+        request.resource.data.keys().hasOnly([
+          'name',
+          'phone',
+          'attendance',
+          'guests',
+          'message',
+          'submittedAt',
+          'event'
+        ])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 100
+        && request.resource.data.phone is string
+        && request.resource.data.phone.size() > 0
+        && request.resource.data.phone.size() <= 30
+        && request.resource.data.attendance in ['yes', 'no']
+        && request.resource.data.guests is string
+        && request.resource.data.message is string
+        && request.resource.data.message.size() <= 500
+        && request.resource.data.event == 'Joy-Frida Kendi Graduation Celebration 2026';
+
+      allow read, update, delete: if false;
+    }
+  }
+}

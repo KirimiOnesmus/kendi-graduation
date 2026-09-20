@@ -1,0 +1,26 @@
+
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Party photos live here. The gallery on the site (app.js -> loadGallery)
+    // lists everything under this path and lets guests download it.
+    // Guests can only read/download — upload new photos from the Firebase
+    // Console (Storage -> gallery folder) or the Firebase CLI as the admin.
+    match /gallery/{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /music/{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}
