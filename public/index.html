@@ -35,8 +35,6 @@
       }
     }
   </script>
-    <script type="module" src="app.js"></script>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -48,33 +46,52 @@
 <body class="bg-purple-50 text-slate-900 antialiased">
 
   <div id="opening-screen" class="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-purple-950">
-    <div class="absolute inset-0 opening-glow" id="opening-glow"></div>
+    <div class="absolute inset-0 opening-glow pointer-events-none" id="opening-glow"></div>
 
-    <div class="relative w-[min(92vw,480px)] text-center">
-      <p class="mb-5 text-xs uppercase tracking-[.35em] text-white/70">A special invitation</p>
+    <div class="opening-stage relative z-10 w-[min(92vw,520px)] text-center">
+      <p class="opening-kicker">A sealed invitation</p>
 
-      <div id="envelope" class="envelope mx-auto">
+      <div id="envelope" class="envelope mx-auto" role="button" tabindex="0" aria-label="Open the invitation">
         <div class="envelope-back"></div>
-        <div class="envelope-front"></div>
-        <div class="envelope-flap"></div>
-        <div class="wax-seal"><span>JFK</span></div>
+        <div class="envelope-liner"></div>
 
         <div id="invitation-card" class="invitation-card">
           <div class="card-inner">
-            <div class="text-[10px] uppercase tracking-[.3em] text-purple-800">You are invited</div>
-            <span class="material-symbols-outlined icon-fill icon-purple my-2" style="font-size:2.4rem;">school</span>
-            <div class="font-display text-2xl font-semibold text-purple-900">Joy-Frida Kendi</div>
-            <div class="script mt-1 text-3xl text-purple-800">Graduation Celebration</div>
+            <div class="card-monogram">JFK</div>
+            <div class="text-[9px] uppercase tracking-[.32em] text-purple-800/80">You are invited</div>
+            <div class="font-display text-[1.65rem] font-semibold leading-tight text-purple-950">Joy-Frida Kendi</div>
+            <div class="script mt-1 text-[1.85rem] leading-none text-purple-800">Graduation</div>
+            <div class="card-rule"></div>
+            <div class="text-[9px] uppercase tracking-[.22em] text-slate-500">3 October 2026 · 1:00 PM</div>
           </div>
+        </div>
+
+        <div class="envelope-pocket">
+          <div class="postage-stamp" aria-hidden="true">
+            <span>USIU</span>
+            <strong>Class of 2026</strong>
+          </div>
+          <div class="envelope-address">
+            <span>To a cherished guest</span>
+          </div>
+        </div>
+
+        <div class="envelope-flap">
+          <div class="flap-front">
+            <div class="flap-flourish"></div>
+          </div>
+          <div class="flap-back"></div>
+        </div>
+
+        <div class="wax-seal" aria-hidden="true">
+          <span class="seal-ring"></span>
+          <span class="seal-initials">JFK</span>
         </div>
       </div>
 
-      <button id="open-invitation"
-        class="wax-button mt-12 rounded-full px-8 py-3 text-sm font-bold tracking-wide transition hover:-translate-y-1">
-        Open Invitation
+      <button id="open-invitation" type="button" class="tap-cta">
+        Tap to open
       </button>
-
-      <p class="script mt-4 text-xl text-white/60">Tap to open</p>
     </div>
   </div>
 
@@ -107,6 +124,7 @@
         <div class="hidden gap-6 text-xs font-semibold uppercase tracking-wider text-purple-900 md:flex">
           <a href="#story" class="nav-link">Story</a>
           <a href="#details" class="nav-link">Details</a>
+          <a href="#gifts" class="nav-link">Gifts</a>
           <a href="#gallery" class="nav-link">Gallery</a>
           <a href="#rsvp" class="nav-link">RSVP</a>
         </div>
@@ -122,6 +140,7 @@
     <div id="mobile-nav" aria-hidden="true">
       <a href="#story" class="mobile-link"><span class="material-symbols-outlined icon-gold">auto_stories</span>Story</a>
       <a href="#details" class="mobile-link"><span class="material-symbols-outlined icon-gold">calendar_month</span>Details</a>
+      <a href="#gifts" class="mobile-link"><span class="material-symbols-outlined icon-gold">redeem</span>Gifts</a>
       <a href="#gallery" class="mobile-link"><span class="material-symbols-outlined icon-gold">photo_library</span>Gallery</a>
       <a href="#rsvp" class="mobile-link"><span class="material-symbols-outlined icon-gold">mail</span>RSVP</a>
     </div>
@@ -268,8 +287,60 @@
               <span class="material-symbols-outlined" style="font-size:15px;">near_me</span>Get Directions
             </a>
           </article>
+        </div>
 
-      
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-3 reveal">
+          <button type="button" data-download-ics class="calendar-action">
+            <span class="material-symbols-outlined">event_available</span>
+            Add to Calendar
+          </button>
+          <a data-google-calendar href="#" target="_blank" rel="noopener" class="calendar-action calendar-action-ghost">
+            <span class="material-symbols-outlined">calendar_month</span>
+            Google Calendar
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="gifts" class="px-5 py-24">
+      <div class="mx-auto max-w-5xl">
+        <div class="mx-auto max-w-2xl text-center reveal">
+          <p class="text-xs font-semibold uppercase tracking-[.3em] text-purple-700">With a grateful heart</p>
+          <h2 class="mt-3 font-display text-5xl font-semibold text-purple-950">Gift the Graduate</h2>
+          <div class="mx-auto my-6 h-px w-40 bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+          <p class="leading-8 text-slate-600">
+            Your presence is the gift Joy-Frida hopes for most. Should you wish to honour
+            her next chapter as well, a contribution would be received with so much love.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-5 md:grid-cols-3">
+          <article class="gift-card reveal">
+            <div class="icon-shell"><span class="material-symbols-outlined">favorite</span></div>
+            <h3>Your Presence</h3>
+            <p>Celebrating together is the greatest gift of all. Please RSVP so a place can be saved for you.</p>
+            <a href="#rsvp" class="gift-link">Kindly RSVP</a>
+          </article>
+
+          <article class="gift-card reveal delay-1">
+            <div class="icon-shell"><span class="material-symbols-outlined">redeem</span></div>
+            <h3>A Contribution</h3>
+            <p>Send a gift via M-Pesa toward her next chapter.</p>
+            <!-- Replace the number below with Joy-Frida's M-Pesa number before sharing the invite -->
+            <p class="gift-pay-name">Joy-Frida Kendi</p>
+            <button type="button" class="copy-chip" data-copy="0700000000" data-copy-label="M-Pesa number" id="copy-mpesa">
+              <span class="copy-value">0700 000 000</span>
+              <span class="copy-action">Copy</span>
+            </button>
+          </article>
+
+          <article class="gift-card reveal delay-2">
+            <div class="icon-shell"><span class="material-symbols-outlined">edit_note</span></div>
+            <h3>A Written Note</h3>
+            <p>A few words of congratulation mean more than you know — add them when you RSVP.</p>
+            <a href="#rsvp" class="gift-link">Leave a message</a>
+          </article>
         </div>
       </div>
     </section>
@@ -307,69 +378,81 @@
 
 
 
-    <section id="rsvp" class="relative overflow-hidden bg-purple-950 px-5 py-24 text-white">
+    <section id="rsvp" class="relative overflow-hidden bg-purple-950 px-5 py-24">
       <div class="absolute -left-24 top-0 h-72 w-72 rounded-full bg-purple-700/30 blur-3xl"></div>
       <div class="absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-purple-500/20 blur-3xl"></div>
 
-      <div class="relative mx-auto max-w-3xl">
-        <div class="text-center reveal">
-          <p class="text-xs font-semibold uppercase tracking-[.3em] text-white/60">Your presence matters</p>
-          <h2 class="mt-3 font-display text-5xl font-semibold">Will You Join Us?</h2>
-          <p class="mx-auto mt-5 max-w-xl leading-7 text-white/70">
-            Kindly confirm your attendance so we can make the necessary arrangements.
-          </p>
-        </div>
+      <div class="relative mx-auto max-w-lg">
+        <div class="rsvp-panel reveal">
+          <div class="rsvp-panel-head">
+            <p class="text-[10px] font-semibold uppercase tracking-[.32em] text-purple-700">Your presence matters</p>
+            <h2 class="font-display text-4xl font-semibold text-purple-950 sm:text-5xl">Kindly RSVP</h2>
+            <p class="mt-3 text-sm leading-6 text-slate-500">Confirm your attendance so we can save a place for you.</p>
+          </div>
 
-        <div class="mt-10 rounded-3xl border border-white/10 bg-white/10 p-6 shadow-2xl backdrop-blur-xl sm:p-8 reveal">
-
-          <form id="rsvp-form" class="space-y-5">
+          <form id="rsvp-form" class="space-y-6">
             <div>
-              <label for="name" class="mb-2 block text-sm font-semibold">Full Name *</label>
-              <input id="name" name="name" required maxlength="100" class="form-input" placeholder="Your full name">
-            </div>
-
-            <div class="grid gap-5 sm:grid-cols-2">
-              <div>
-                <label for="phone" class="mb-2 block text-sm font-semibold">Phone / WhatsApp *</label>
-                <input id="phone" name="phone" required maxlength="30" class="form-input" placeholder="+254 7XX XXX XXX">
-              </div>
-
-              <div>
-                <label for="attendance" class="mb-2 block text-sm font-semibold">Will you attend? *</label>
-                <select id="attendance" name="attendance" required class="form-input">
-                  <option value="yes">Yes, I'll be there</option>
-                  <option value="no">Unfortunately, I can't make it</option>
-                </select>
-              </div>
+              <label for="name" class="rsvp-label">Your name</label>
+              <input id="name" name="name" required maxlength="100" class="rsvp-input" placeholder="Kindly" autocomplete="name">
             </div>
 
             <div>
-              <label for="guests" class="mb-2 block text-sm font-semibold">Number of Guests</label>
-              <select id="guests" name="guests" class="form-input">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5+</option>
-              </select>
+              <label for="phone" class="rsvp-label">Phone / WhatsApp</label>
+              <input id="phone" name="phone" required maxlength="30" class="rsvp-input" placeholder="+254 7XX XXX XXX" autocomplete="tel">
             </div>
 
+            <fieldset class="rsvp-fieldset">
+              <legend class="rsvp-label">Will you be joining our special day?</legend>
+              <label class="rsvp-option">
+                <input type="radio" name="attendance" value="yes" required>
+                <span>Of course, I wouldn't miss it for the world</span>
+              </label>
+              <label class="rsvp-option">
+                <input type="radio" name="attendance" value="no">
+                <span>So sorry, I won't be able to make it</span>
+              </label>
+            </fieldset>
+
+            <fieldset class="rsvp-fieldset" id="guest-fieldset">
+              <legend class="rsvp-label">Will you be bringing a guest along?</legend>
+              <label class="rsvp-option">
+                <input type="radio" name="guests" value="1" checked>
+                <span>Just myself</span>
+              </label>
+              <label class="rsvp-option">
+                <input type="radio" name="guests" value="2">
+                <span>I'll be bringing a guest</span>
+              </label>
+              <label class="rsvp-option">
+                <input type="radio" name="guests" value="3">
+                <span>We'll be a party of 3</span>
+              </label>
+              <label class="rsvp-option">
+                <input type="radio" name="guests" value="4">
+                <span>We'll be a party of 4</span>
+              </label>
+              <label class="rsvp-option">
+                <input type="radio" name="guests" value="5">
+                <span>We'll be a party of 5+</span>
+              </label>
+            </fieldset>
+
             <div>
-              <label for="message" class="mb-2 block text-sm font-semibold">Message (optional)</label>
-              <textarea id="message" name="message" rows="4" maxlength="500" class="form-input" placeholder="A message for Joy-Frida..."></textarea>
+              <label for="message" class="rsvp-label">A note for Joy-Frida (optional)</label>
+              <textarea id="message" name="message" rows="3" maxlength="500" class="rsvp-input" placeholder="Congratulations..."></textarea>
             </div>
 
             <button id="rsvp-submit" type="submit" class="wax-button w-full rounded-full px-7 py-3.5 text-sm font-bold shadow-xl transition hover:-translate-y-1">
-              Confirm Attendance
+              Send RSVP
             </button>
 
-            <p id="rsvp-status" class="min-h-6 text-center text-sm text-white/80" aria-live="polite"></p>
+            <p id="rsvp-status" class="min-h-6 text-center text-sm text-purple-800" aria-live="polite"></p>
           </form>
 
           <div id="rsvp-success" class="hidden">
-            <span class="material-symbols-outlined icon-fill" style="font-size:3rem;color:var(--gold-light);">check_circle</span>
-            <h3 class="mt-3 font-display text-3xl">You're on the list<span id="success-name"></span>!</h3>
-            <p class="mx-auto mt-2 max-w-sm text-sm text-white/70">Save the date so you never miss it — your calendar file includes a reminder one day before the celebration.</p>
+            <span class="material-symbols-outlined icon-fill" style="font-size:3rem;color:var(--gold);">check_circle</span>
+            <h3 class="mt-3 font-display text-3xl text-purple-950">You're on the list<span id="success-name"></span>!</h3>
+            <p class="mx-auto mt-2 max-w-sm text-sm text-slate-500">Save the date so you never miss it — the calendar file includes a reminder one day before the celebration.</p>
 
             <button id="calendar-badge-trigger" class="calendar-badge" aria-label="Download calendar reminder">
               <svg class="badge-ring" viewBox="0 0 200 200">
@@ -384,23 +467,22 @@
             </button>
 
             <div class="calendar-options">
-              <button id="download-ics" type="button">
+              <button id="download-ics" type="button" data-download-ics>
                 <span class="material-symbols-outlined">download</span>Download (.ics)
               </button>
-              <a id="google-calendar-link" href="#" target="_blank" rel="noopener">
+              <a id="google-calendar-link" href="#" target="_blank" rel="noopener" data-google-calendar>
                 <span class="material-symbols-outlined">calendar_month</span>Google Calendar
               </a>
             </div>
+
+            <a href="#home" class="return-invite">Return to Invitation</a>
           </div>
 
-          <div class="my-7 gold-line opacity-50"></div>
-
-          <div class="text-center">
-            <p class="text-sm text-white/60">Prefer WhatsApp?</p>
+          <div class="rsvp-whatsapp">
+            <p>Prefer WhatsApp?</p>
             <a id="whatsapp-link"
                href="https://wa.me/254700000000?text=Hello%20Joy-Frida%2C%20I%27d%20like%20to%20RSVP%20for%20your%20graduation%20celebration%20on%203%20October%202026."
-               target="_blank" rel="noopener"
-               class="mt-3 inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold transition hover:bg-white/10">
+               target="_blank" rel="noopener">
               <span class="material-symbols-outlined" style="font-size:18px;">chat_bubble</span>RSVP via WhatsApp
             </a>
           </div>
@@ -445,8 +527,58 @@
     </a>
   </div>
 
+  <script>
+    (function () {
+      var envelope = document.getElementById("envelope");
+      var openButton = document.getElementById("open-invitation");
+      var openingScreen = document.getElementById("opening-screen");
+      var site = document.getElementById("site");
+      var nav = document.getElementById("nav");
+      var opened = false;
 
+      function openInvitation(event) {
+        if (event) event.preventDefault();
+        if (opened || !envelope || !openingScreen) return;
+        opened = true;
 
+        envelope.classList.add("open");
+        envelope.setAttribute("aria-disabled", "true");
+        envelope.tabIndex = -1;
 
+        if (openButton) {
+          openButton.disabled = true;
+          openButton.textContent = "Opening…";
+        }
+
+        setTimeout(function () {
+          openingScreen.classList.add("opening-fade");
+          if (site) {
+            site.classList.remove("site-hidden");
+            site.classList.add("site-visible");
+          }
+          if (nav) nav.classList.remove("-translate-y-full");
+
+          setTimeout(function () {
+            if (openingScreen && openingScreen.parentNode) openingScreen.remove();
+          }, 950);
+
+          window.__invitationOpened = true;
+          window.dispatchEvent(new CustomEvent("invitation-opened"));
+        }, 1400);
+      }
+
+      if (envelope) {
+        envelope.addEventListener("click", openInvitation);
+        envelope.addEventListener("keydown", function (event) {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openInvitation();
+          }
+        });
+      }
+      if (openButton) openButton.addEventListener("click", openInvitation);
+    })();
+  </script>
+  <script type="module" src="./app.js"></script>
 </body>
 </html>

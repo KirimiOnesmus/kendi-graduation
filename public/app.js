@@ -6,32 +6,34 @@ import {
   addDoc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-import { firebaseConfig } from "./firebase-config.js";
-
 
 let db = null;
 
-const firebaseIsConfigured =
-  firebaseConfig &&
-  firebaseConfig.apiKey &&
-  firebaseConfig.projectId &&
-  firebaseConfig.appId &&
-  !firebaseConfig.apiKey.includes("YOUR_");
-
-if (firebaseIsConfigured) {
+(async function connectFirebase() {
   try {
+    const { firebaseConfig } = await import("./firebase-config.js");
+    const firebaseIsConfigured =
+      firebaseConfig &&
+      firebaseConfig.apiKey &&
+      firebaseConfig.projectId &&
+      firebaseConfig.appId &&
+      !String(firebaseConfig.apiKey).includes("YOUR_");
+
+    if (!firebaseIsConfigured) return;
+
     const app = initializeApp(firebaseConfig);
     db = getFirestore(app);
   } catch (error) {
     console.error("Firebase initialization failed:", error);
   }
-}
+})();
 
 // Paste the album's public "Share" link here (Google Photos > your
 // album > Share > Create link). Used as the fallback "view full
 // album" link and shown if the embedded grid ever fails to load.
 const GALLERY_ALBUM_LINK = "https://photos.app.goo.gl/REPLACE_ME";
-document.getElementById("gallery-album-link").href = GALLERY_ALBUM_LINK;
+const galleryAlbumLink = document.getElementById("gallery-album-link");
+if (galleryAlbumLink) galleryAlbumLink.href = GALLERY_ALBUM_LINK;
 
 
 const EVENT = {
@@ -45,14 +47,10 @@ const EVENT = {
 
 
 
-const openingScreen = document.getElementById("opening-screen");
 const openingGlow = document.getElementById("opening-glow");
-const site = document.getElementById("site");
-const envelope = document.getElementById("envelope");
-const openButton = document.getElementById("open-invitation");
-const nav = document.getElementById("nav");
 
 (function spawnSparkles() {
+  if (!openingGlow) return;
   const count = 16;
   for (let i = 0; i < count; i++) {
     const dot = document.createElement("span");
@@ -63,22 +61,6 @@ const nav = document.getElementById("nav");
     openingGlow.appendChild(dot);
   }
 })();
-
-openButton.addEventListener("click", () => {
-  envelope.classList.add("open");
-  openButton.disabled = true;
-  openButton.textContent = "Opening…";
-
-  setTimeout(() => {
-    openingScreen.classList.add("opening-fade");
-    site.classList.remove("site-hidden");
-    site.classList.add("site-visible");
-    nav.classList.remove("-translate-y-full");
-
-    setTimeout(() => openingScreen.remove(), 950);
-    startMusicIfAvailable();
-  }, 1250);
-});
 
 
 /*
@@ -314,11 +296,14 @@ const successName = document.getElementById("success-name");
 rsvpForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
+  const attendance = rsvpForm.querySelector('input[name="attendance"]:checked')?.value;
+  const guests = rsvpForm.querySelector('input[name="guests"]:checked')?.value || "1";
+
   const data = {
     name: document.getElementById("name").value.trim(),
     phone: document.getElementById("phone").value.trim(),
-    attendance: document.getElementById("attendance").value,
-    guests: document.getElementById("guests").value,
+    attendance,
+    guests: attendance === "no" ? "0" : guests,
     message: document.getElementById("message").value.trim(),
     submittedAt: serverTimestamp(),
     event: "Joy-Frida Kendi Graduation Celebration 2026"
@@ -326,6 +311,11 @@ rsvpForm.addEventListener("submit", async (event) => {
 
   if (!data.name || !data.phone) {
     rsvpStatus.textContent = "Please enter your name and phone number.";
+    return;
+  }
+
+  if (!data.attendance) {
+    rsvpStatus.textContent = "Please tell us whether you can join.";
     return;
   }
 
@@ -348,14 +338,14 @@ rsvpForm.addEventListener("submit", async (event) => {
       rsvpForm.reset();
       rsvpStatus.textContent = "Thank you for letting us know — you'll be missed!";
       rsvpSubmit.disabled = false;
-      rsvpSubmit.textContent = "Confirm Attendance";
+      rsvpSubmit.textContent = "Send RSVP";
     }
   } catch (error) {
     console.error(error);
     rsvpStatus.textContent =
       "We couldn't submit your RSVP. Please try again or use WhatsApp below.";
     rsvpSubmit.disabled = false;
-    rsvpSubmit.textContent = "Confirm Attendance";
+    rsvpSubmit.textContent = "Send RSVP";
   }
 });
 
@@ -435,7 +425,7 @@ function buildIcsFile() {
   return lines.join("\r\n");
 }
 
-document.getElementById("google-calendar-link").addEventListener("click", (event) => {
+document.getElementById("google-calendar-link")?.addEventListener("click", (event) => {
   event.currentTarget.href = buildGoogleCalendarUrl();
 });
 
@@ -451,8 +441,46 @@ function downloadIcs() {
   URL.revokeObjectURL(url);
 }
 
-document.getElementById("download-ics").addEventListener("click", downloadIcs);
-document.getElementById("calendar-badge-trigger").addEventListener("click", downloadIcs);
+const googleCalendarUrl = buildGoogleCalendarUrl();
+document.querySelectorAll("[data-google-calendar]").forEach((link) => {
+  link.href = googleCalendarUrl;
+});
+document.querySelectorAll("[data-download-ics]").forEach((button) => {
+  button.addEventListener("click", downloadIcs);
+});
+document.getElementById("calendar-badge-trigger")?.addEventListener("click", downloadIcs);
+
+
+document.querySelectorAll("[data-copy]").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const value = button.getAttribute("data-copy");
+    const action = button.querySelector(".copy-action");
+    try {
+      await navigator.clipboard.writeText(value);
+    } catch (error) {
+      const input = document.createElement("textarea");
+      input.value = value;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      input.remove();
+    }
+    button.classList.add("copied");
+    if (action) action.textContent = "Copied";
+    setTimeout(() => {
+      button.classList.remove("copied");
+      if (action) action.textContent = "Copy";
+    }, 1800);
+  });
+});
+
+const guestFieldset = document.getElementById("guest-fieldset");
+rsvpForm?.querySelectorAll('input[name="attendance"]').forEach((input) => {
+  input.addEventListener("change", () => {
+    if (!guestFieldset) return;
+    guestFieldset.hidden = input.value === "no" && input.checked;
+  });
+});
 
 
 /* 
@@ -523,3 +551,6 @@ musicToggle.addEventListener("click", async () => {
     musicIcon.textContent = "volume_off";
   }
 });
+
+window.addEventListener("invitation-opened", startMusicIfAvailable);
+if (window.__invitationOpened) startMusicIfAvailable();
