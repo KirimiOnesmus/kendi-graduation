@@ -6,19 +6,10 @@ import {
   addDoc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-import {
-  getStorage,
-  ref,
-  listAll,
-  getDownloadURL,
-  getMetadata
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
-
 import { firebaseConfig } from "./firebase-config.js";
 
 
 let db = null;
-let storage = null;
 
 const firebaseIsConfigured =
   firebaseConfig &&
@@ -31,11 +22,16 @@ if (firebaseIsConfigured) {
   try {
     const app = initializeApp(firebaseConfig);
     db = getFirestore(app);
-    storage = getStorage(app);
   } catch (error) {
     console.error("Firebase initialization failed:", error);
   }
 }
+
+// Paste the album's public "Share" link here (Google Photos > your
+// album > Share > Create link). Used as the fallback "view full
+// album" link and shown if the embedded grid ever fails to load.
+const GALLERY_ALBUM_LINK = "https://photos.app.goo.gl/REPLACE_ME";
+document.getElementById("gallery-album-link").href = GALLERY_ALBUM_LINK;
 
 
 const EVENT = {
@@ -216,10 +212,11 @@ function setPhotosState(mode) {
       <p class="text-sm">Party photos will appear here after the celebration.<br>Check back soon!</p>
     `;
     photosState.classList.remove("hidden");
-  } else if (mode === "offline") {
+  } else if (mode === "error") {
     photosState.innerHTML = `
       <span class="material-symbols-outlined">cloud_off</span>
-      <p class="text-sm">The photo gallery isn't connected yet — add your Firebase configuration in <strong>firebase-config.js</strong>.</p>
+      <p class="text-sm">Couldn't load the photo grid right now.<br>
+      <a href="${GALLERY_ALBUM_LINK}" target="_blank" rel="noopener" class="underline font-semibold">View the album on Google Photos instead</a>.</p>
     `;
     photosState.classList.remove("hidden");
   } else {
@@ -227,13 +224,15 @@ function setPhotosState(mode) {
   }
 }
 
-function buildPhotoCard({ url, name }) {
+function buildPhotoCard({ url, downloadUrl, name }) {
   const card = document.createElement("div");
   card.className = "photo-card reveal";
+  const filename = `${name || "photo"}.jpg`;
+  const fullUrl = downloadUrl || url;
 
   card.innerHTML = `
     <span class="tape"></span>
-    <button class="photo-open" data-gallery="${url}" data-download="${url}" data-filename="${name}" aria-label="Open photo">
+    <button class="photo-open" data-gallery="${fullUrl}" data-download="${fullUrl}" data-filename="${filename}" aria-label="Open photo">
       <img src="${url}" alt="Graduation celebration photo" loading="lazy">
     </button>
     <button class="photo-download" type="button" aria-label="Download photo">
@@ -241,7 +240,7 @@ function buildPhotoCard({ url, name }) {
     </button>
   `;
 
-  card.querySelector(".photo-download").addEventListener("click", () => downloadImage(url, name));
+  card.querySelector(".photo-download").addEventListener("click", () => downloadImage(fullUrl, filename));
 
   return card;
 }
@@ -267,45 +266,36 @@ async function downloadImage(url, filename) {
 }
 
 async function loadGallery() {
-  if (!storage) {
-    setPhotosState("offline");
-    return;
-  }
-
   setPhotosState("loading");
 
   try {
-    const galleryRef = ref(storage, "gallery");
-    const result = await listAll(galleryRef);
+    const response = await fetch("/api/gallery");
+    if (!response.ok) throw new Error(`Gallery endpoint returned HTTP ${response.status}`);
 
-    if (result.items.length === 0) {
+    const { photos, stale } = await response.json();
+
+    if (!photos || photos.length === 0) {
       setPhotosState("empty");
       return;
     }
 
-    const photos = await Promise.all(result.items.map(async (item) => {
-      const [url, metadata] = await Promise.all([
-        getDownloadURL(item),
-        getMetadata(item).catch(() => null)
-      ]);
-      return {
-        url,
-        name: item.name,
-        time: metadata?.timeCreated ? new Date(metadata.timeCreated).getTime() : 0
-      };
-    }));
-
-    photos.sort((a, b) => b.time - a.time);
-
     const fragment = document.createDocumentFragment();
-    photos.forEach(photo => fragment.appendChild(buildPhotoCard(photo)));
+    photos.forEach(photo =>
+      fragment.appendChild(
+        buildPhotoCard({ url: photo.thumbUrl, downloadUrl: photo.fullUrl, name: photo.id })
+      )
+    );
     photosGrid.appendChild(fragment);
 
     setPhotosState("none");
     observeReveals(photosGrid);
+
+    if (stale) {
+      console.warn("Showing a cached copy of the album — the latest live fetch failed.");
+    }
   } catch (error) {
-    console.error("Could not load party photos:", error);
-    setPhotosState("empty");
+    console.error("Could not load party photos from Google Photos:", error);
+    setPhotosState("error");
   }
 }
 

@@ -35,6 +35,7 @@
       }
     }
   </script>
+    <script type="module" src="app.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -282,6 +283,10 @@
             Photos from the celebration will be added here after the big day —
             tap any photo to save it to your phone.
           </p>
+          <a id="gallery-album-link" href="#" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-purple-800 underline underline-offset-4 hover:text-purple-600">
+            View the full album on Google Photos
+            <span class="material-symbols-outlined" style="font-size:16px;">open_in_new</span>
+          </a>
         </div>
 
         <div id="photos-grid" class="photos-grid mt-12">
@@ -442,6 +447,6 @@
 
 
 
-  <script type="module" src="app.js"></script>
+
 </body>
 </html>
