@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#35105f">
+  <meta name="description" content="Joy-Frida Kendi — Pharmacy Graduation Celebration, USIU-Africa.">
+  <title>Joy-Frida Kendi - Graduation Celebration</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            purple: {
+              950: '#21053e',
+              900: '#2b084d',
+              800: '#35105f',
+              700: '#4b1b79',
+              100: '#eee5fb',
+              50: '#faf7ff'
+            },
+            gold: '#b18a38'
+          },
+          fontFamily: {
+            display: ['Cormorant Garamond', 'serif'],
+            script: ['Great Vibes', 'cursive'],
+            sans: ['Inter', 'sans-serif']
+          },
+          boxShadow: {
+            invitation: '0 30px 90px rgba(53,16,95,.18)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-purple-50 text-slate-900 antialiased">
+
+  <div id="opening-screen" class="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-purple-950">
+    <div class="absolute inset-0 opening-glow" id="opening-glow"></div>
+
+    <div class="relative w-[min(92vw,480px)] text-center">
+      <p class="mb-5 text-xs uppercase tracking-[.35em] text-white/70">A special invitation</p>
+
+      <div id="envelope" class="envelope mx-auto">
+        <div class="envelope-back"></div>
+        <div class="envelope-front"></div>
+        <div class="envelope-flap"></div>
+        <div class="wax-seal"><span>JFK</span></div>
+
+        <div id="invitation-card" class="invitation-card">
+          <div class="card-inner">
+            <div class="text-[10px] uppercase tracking-[.3em] text-purple-800">You are invited</div>
+            <span class="material-symbols-outlined icon-fill icon-purple my-2" style="font-size:2.4rem;">school</span>
+            <div class="font-display text-2xl font-semibold text-purple-900">Joy-Frida Kendi</div>
+            <div class="script mt-1 text-3xl text-purple-800">Graduation Celebration</div>
+          </div>
+        </div>
+      </div>
+
+      <button id="open-invitation"
+        class="wax-button mt-12 rounded-full px-8 py-3 text-sm font-bold tracking-wide transition hover:-translate-y-1">
+        Open Invitation
+      </button>
+
+      <p class="script mt-4 text-xl text-white/60">Tap to open</p>
+    </div>
+  </div>
+
+  <div id="site" class="site-hidden">
+
+    
+    <svg class="pointer-events-none fixed left-0 top-0 z-10 opacity-70 flower-corner" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path class="fc-stem" d="M6 6 C 36 18, 46 40, 40 66" stroke-width="1.4" fill="none"/>
+      <path class="fc-stem" d="M14 4 C 30 26, 26 48, 44 60" stroke-width="1.2" fill="none"/>
+      <circle class="fc-bloom" cx="10" cy="10" r="14"/>
+      <circle class="fc-bloom" cx="30" cy="6" r="9"/>
+      <circle class="fc-bloom" cx="6" cy="30" r="9"/>
+      <ellipse class="fc-leaf" cx="34" cy="40" rx="10" ry="5" transform="rotate(35 34 40)"/>
+      <ellipse class="fc-leaf" cx="42" cy="58" rx="8" ry="4" transform="rotate(60 42 58)"/>
+    </svg>
+    <svg class="pointer-events-none fixed right-0 top-0 z-10 opacity-70 flower-corner flower-right" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path class="fc-stem" d="M6 6 C 36 18, 46 40, 40 66" stroke-width="1.4" fill="none"/>
+      <path class="fc-stem" d="M14 4 C 30 26, 26 48, 44 60" stroke-width="1.2" fill="none"/>
+      <circle class="fc-bloom" cx="10" cy="10" r="14"/>
+      <circle class="fc-bloom" cx="30" cy="6" r="9"/>
+      <circle class="fc-bloom" cx="6" cy="30" r="9"/>
+      <ellipse class="fc-leaf" cx="34" cy="40" rx="10" ry="5" transform="rotate(35 34 40)"/>
+      <ellipse class="fc-leaf" cx="42" cy="58" rx="8" ry="4" transform="rotate(60 42 58)"/>
+    </svg>
+
+
+    <nav id="nav" class="fixed left-0 right-0 top-0 z-50 -translate-y-full border-b border-purple-100/60 bg-white/85 backdrop-blur-xl transition-transform duration-700">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+        <a href="#home" class="font-display text-2xl font-semibold text-purple-800">JFK<span class="text-gold">.</span></a>
+        <div class="hidden gap-6 text-xs font-semibold uppercase tracking-wider text-purple-900 md:flex">
+          <a href="#story" class="nav-link">Story</a>
+          <a href="#details" class="nav-link">Details</a>
+          <a href="#gallery" class="nav-link">Gallery</a>
+          <a href="#rsvp" class="nav-link">RSVP</a>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="#rsvp" class="rounded-full bg-purple-800 px-5 py-2 text-xs font-bold text-white shadow-md transition hover:bg-purple-700">RSVP</a>
+          <button id="menu-toggle" class="md:hidden" aria-label="Open menu" aria-expanded="false">
+            <span class="material-symbols-outlined" id="menu-icon">menu</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <div id="mobile-nav" aria-hidden="true">
+      <a href="#story" class="mobile-link"><span class="material-symbols-outlined icon-gold">auto_stories</span>Story</a>
+      <a href="#details" class="mobile-link"><span class="material-symbols-outlined icon-gold">calendar_month</span>Details</a>
+      <a href="#gallery" class="mobile-link"><span class="material-symbols-outlined icon-gold">photo_library</span>Gallery</a>
+      <a href="#rsvp" class="mobile-link"><span class="material-symbols-outlined icon-gold">mail</span>RSVP</a>
+    </div>
+
+
+    <header id="home" class="relative flex min-h-screen items-center justify-center overflow-hidden px-5 py-28">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_25%,#ffffff_0%,#eee5fb_45%,#dfcef4_100%)]"></div>
+
+      <div class="absolute -left-16 top-10 h-64 w-64 rounded-full bg-purple-300/25 blur-3xl"></div>
+      <div class="absolute -right-16 bottom-10 h-72 w-72 rounded-full bg-purple-400/20 blur-3xl"></div>
+
+      <div class="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2">
+        <div class="text-center lg:text-left">
+          <p class="mb-5 text-xs font-semibold uppercase tracking-[.35em] text-purple-800">You are cordially invited</p>
+
+          <div class="mb-4 flex justify-center lg:justify-start float-slow">
+            <span class="material-symbols-outlined icon-fill icon-purple drop-shadow-sm" style="font-size:3.6rem;">school</span>
+          </div>
+
+          <h1 class="font-display text-6xl font-semibold leading-[.85] text-purple-950 sm:text-8xl">
+            Graduation
+          </h1>
+          <p class="script mt-1 text-5xl text-purple-800 sm:text-6xl">Celebration</p>
+
+          <div class="mx-auto my-7 h-px max-w-xs bg-gradient-to-r from-transparent via-gold to-transparent lg:mx-0"></div>
+
+          <p class="text-sm uppercase tracking-[.28em] text-slate-600">Celebrating the graduation of</p>
+
+          <h2 class="mt-3 font-display text-4xl font-bold uppercase tracking-wide text-purple-900 sm:text-5xl">
+            Joy-Frida Kendi
+          </h2>
+
+          <p class="mt-4 font-display text-xl text-purple-800">
+            Pharmacy Graduate - USIU-Africa
+          </p>
+
+          <p class="mx-auto mt-6 max-w-xl text-base leading-8 text-slate-600 lg:mx-0">
+            A beautiful milestone deserves a beautiful celebration.
+            Join us as we celebrate Joy-Frida's achievement and the beginning
+            of an exciting new chapter.
+          </p>
+
+          <div class="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
+            <a href="#rsvp" class="rounded-full bg-purple-800 px-7 py-3 text-sm font-bold text-white shadow-lg shadow-purple-900/20 transition hover:-translate-y-1 hover:bg-purple-700">RSVP Now</a>
+            <a href="#details" class="rounded-full border border-purple-300 bg-white/60 px-7 py-3 text-sm font-semibold text-purple-900 transition hover:-translate-y-1 hover:bg-white">Event Details</a>
+          </div>
+        </div>
+
+       
+        <div class="mx-auto w-full max-w-md lg:max-w-lg">
+          <div class="artwork-frame reveal-up">
+            <img src="assets/invitation.jpg" alt="Joy-Frida Kendi graduation invitation" class="h-auto w-full rounded-[1.4rem] shadow-invitation">
+          </div>
+        </div>
+      </div>
+
+      <a href="#countdown" class="absolute bottom-7 left-1/2 -translate-x-1/2 text-center text-xs uppercase tracking-[.25em] text-purple-800/70">
+        <span class="material-symbols-outlined block mx-auto" style="font-size:20px;">keyboard_arrow_down</span>
+        Scroll
+      </a>
+    </header>
+
+
+    <section id="countdown" class="relative overflow-hidden bg-purple-950 px-5 py-20 text-white">
+      <div class="mx-auto max-w-5xl text-center">
+        <p class="text-xs uppercase tracking-[.35em] text-white/60">The celebration begins in</p>
+        <h2 class="mt-3 font-display text-4xl sm:text-5xl">Counting Down to the Big Day</h2>
+
+        <div id="countdown-grid" class="mx-auto mt-10 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
+          <div class="glass-time"><strong id="days">00</strong><span>Days</span></div>
+          <div class="glass-time"><strong id="hours">00</strong><span>Hours</span></div>
+          <div class="glass-time"><strong id="minutes">00</strong><span>Minutes</span></div>
+          <div class="glass-time"><strong id="seconds">00</strong><span>Seconds</span></div>
+        </div>
+
+        <p class="mt-8 text-sm text-white/60">Saturday  3 October 2026  1:00 PM</p>
+      </div>
+    </section>
+
+
+
+    <section id="story" class="relative overflow-hidden px-5 py-24">
+      <div class="mx-auto max-w-5xl">
+        <div class="mx-auto max-w-3xl text-center reveal">
+          <p class="text-xs font-semibold uppercase tracking-[.3em] text-purple-700">A milestone worth celebrating</p>
+          <h2 class="mt-3 font-display text-5xl font-semibold text-purple-950 sm:text-6xl">From Dreams to Discovery</h2>
+          <div class="mx-auto my-6 h-px w-40 bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+          <p class="leading-8 text-slate-600">
+            Years of dedication, learning, perseverance and purpose have led to this
+            special moment. Today we celebrate not only the achievement, but the
+            journey behind it and the exciting chapter ahead.
+          </p>
+        </div>
+
+        <div class="mt-14 grid gap-5 md:grid-cols-3">
+          <article class="story-card reveal">
+            <div class="icon-shell"><span class="material-symbols-outlined">auto_stories</span></div>
+            <h3>Learning</h3>
+            <p>Knowledge, curiosity and countless hours of growth.</p>
+          </article>
+
+          <article class="story-card reveal delay-1">
+            <div class="icon-shell"><span class="material-symbols-outlined">trending_up</span></div>
+            <h3>Perseverance</h3>
+            <p>Every challenge became another step toward the goal.</p>
+          </article>
+
+          <article class="story-card reveal delay-2">
+            <div class="icon-shell"><span class="material-symbols-outlined">health_and_safety</span></div>
+            <h3>Purpose</h3>
+            <p>A new chapter begins with the opportunity to make a difference.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section id="details" class="bg-white px-5 py-24">
+      <div class="mx-auto max-w-6xl">
+        <div class="text-center reveal">
+          <p class="text-xs font-semibold uppercase tracking-[.3em] text-purple-700">Mark your calendar</p>
+          <h2 class="mt-3 font-display text-5xl font-semibold text-purple-950">The Celebration</h2>
+        </div>
+
+        <div class="mt-12 grid gap-5 md:grid-cols-3">
+          <article class="detail-card reveal">
+            <div class="icon-shell"><span class="material-symbols-outlined">calendar_month</span></div>
+            <h3>Date</h3>
+            <p>Saturday<br><strong>3 October 2026</strong></p>
+          </article>
+
+          <article class="detail-card reveal delay-1">
+            <div class="icon-shell"><span class="material-symbols-outlined">schedule</span></div>
+            <h3>Time</h3>
+            <p>Celebration begins at<br><strong>1:00 PM</strong></p>
+          </article>
+
+          <article class="detail-card reveal delay-2">
+            <div class="icon-shell"><span class="material-symbols-outlined">location_on</span></div>
+            <h3>Venue</h3>
+            <p><strong>Membley Pavilion E23</strong></p>
+            <a id="maps-link" href="https://www.google.com/maps/search/?api=1&query=Membley+Pavilion+E23+Kenya" target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-purple-800 underline underline-offset-4">
+              <span class="material-symbols-outlined" style="font-size:15px;">near_me</span>Get Directions
+            </a>
+          </article>
+
+      
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="px-5 py-24">
+      <div class="mx-auto max-w-6xl">
+        <div class="text-center reveal">
+          <p class="text-xs font-semibold uppercase tracking-[.3em] text-purple-700">Memories</p>
+          <h2 class="mt-3 font-display text-5xl font-semibold text-purple-950">The Journey</h2>
+          <p class="mx-auto mt-4 max-w-xl text-slate-600">
+            Photos from the celebration will be added here after the big day —
+            tap any photo to save it to your phone.
+          </p>
+        </div>
+
+        <div id="photos-grid" class="photos-grid mt-12">
+          <div class="photo-card reveal">
+            <button class="photo-open" data-gallery="assets/invitation.jpg" aria-label="Open graduation invitation">
+              <img src="assets/invitation.jpg" alt="Graduation invitation">
+            </button>
+            <p class="photo-caption">The Invitation</p>
+          </div>
+
+          <div class="photos-state" id="photos-state">
+            <div class="spin-loader"></div>
+            <p class="text-sm">Loading party photos…</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section id="rsvp" class="relative overflow-hidden bg-purple-950 px-5 py-24 text-white">
+      <div class="absolute -left-24 top-0 h-72 w-72 rounded-full bg-purple-700/30 blur-3xl"></div>
+      <div class="absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-purple-500/20 blur-3xl"></div>
+
+      <div class="relative mx-auto max-w-3xl">
+        <div class="text-center reveal">
+          <p class="text-xs font-semibold uppercase tracking-[.3em] text-white/60">Your presence matters</p>
+          <h2 class="mt-3 font-display text-5xl font-semibold">Will You Join Us?</h2>
+          <p class="mx-auto mt-5 max-w-xl leading-7 text-white/70">
+            Kindly confirm your attendance so we can make the necessary arrangements.
+          </p>
+        </div>
+
+        <div class="mt-10 rounded-3xl border border-white/10 bg-white/10 p-6 shadow-2xl backdrop-blur-xl sm:p-8 reveal">
+
+          <form id="rsvp-form" class="space-y-5">
+            <div>
+              <label for="name" class="mb-2 block text-sm font-semibold">Full Name *</label>
+              <input id="name" name="name" required maxlength="100" class="form-input" placeholder="Your full name">
+            </div>
+
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="phone" class="mb-2 block text-sm font-semibold">Phone / WhatsApp *</label>
+                <input id="phone" name="phone" required maxlength="30" class="form-input" placeholder="+254 7XX XXX XXX">
+              </div>
+
+              <div>
+                <label for="attendance" class="mb-2 block text-sm font-semibold">Will you attend? *</label>
+                <select id="attendance" name="attendance" required class="form-input">
+                  <option value="yes">Yes, I'll be there 💜</option>
+                  <option value="no">Unfortunately, I can't make it</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="guests" class="mb-2 block text-sm font-semibold">Number of Guests</label>
+              <select id="guests" name="guests" class="form-input">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5+</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="message" class="mb-2 block text-sm font-semibold">Message (optional)</label>
+              <textarea id="message" name="message" rows="4" maxlength="500" class="form-input" placeholder="A message for Joy-Frida..."></textarea>
+            </div>
+
+            <button id="rsvp-submit" type="submit" class="wax-button w-full rounded-full px-7 py-3.5 text-sm font-bold shadow-xl transition hover:-translate-y-1">
+              Confirm Attendance
+            </button>
+
+            <p id="rsvp-status" class="min-h-6 text-center text-sm text-white/80" aria-live="polite"></p>
+          </form>
+
+          <div id="rsvp-success" class="hidden">
+            <span class="material-symbols-outlined icon-fill" style="font-size:3rem;color:var(--gold-light);">check_circle</span>
+            <h3 class="mt-3 font-display text-3xl">You're on the list<span id="success-name"></span>!</h3>
+            <p class="mx-auto mt-2 max-w-sm text-sm text-white/70">Save the date so you never miss it — your calendar file includes a reminder one day before the celebration.</p>
+
+            <button id="calendar-badge-trigger" class="calendar-badge" aria-label="Download calendar reminder">
+              <svg class="badge-ring" viewBox="0 0 200 200">
+                <defs>
+                  <path id="calendarTextPath" d="M 100,100 m -78,0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0"/>
+                </defs>
+                <text font-size="12.5" letter-spacing="3" fill="currentColor">
+                  <textPath href="#calendarTextPath" startOffset="0%">ADD TO CALENDAR &#8226; SAVE THE DATE &#8226; </textPath>
+                </text>
+              </svg>
+              <span class="badge-core"><span class="material-symbols-outlined icon-fill">event_available</span></span>
+            </button>
+
+            <div class="calendar-options">
+              <button id="download-ics" type="button">
+                <span class="material-symbols-outlined">download</span>Download (.ics)
+              </button>
+              <a id="google-calendar-link" href="#" target="_blank" rel="noopener">
+                <span class="material-symbols-outlined">calendar_month</span>Google Calendar
+              </a>
+            </div>
+          </div>
+
+          <div class="my-7 gold-line opacity-50"></div>
+
+          <div class="text-center">
+            <p class="text-sm text-white/60">Prefer WhatsApp?</p>
+            <a id="whatsapp-link"
+               href="https://wa.me/254700000000?text=Hello%20Joy-Frida%2C%20I%27d%20like%20to%20RSVP%20for%20your%20graduation%20celebration%20on%203%20October%202026."
+               target="_blank" rel="noopener"
+               class="mt-3 inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold transition hover:bg-white/10">
+              <span class="material-symbols-outlined" style="font-size:18px;">chat_bubble</span>RSVP via WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="relative overflow-hidden px-5 py-24 text-center">
+      <div class="mx-auto max-w-3xl reveal">
+        <span class="material-symbols-outlined icon-fill" style="font-size:3rem;color:var(--gold);">favorite</span>
+        <p class="script mt-5 text-5xl text-purple-800">It would mean the world</p>
+        <p class="font-display text-3xl text-purple-950 sm:text-4xl">to have you there!</p>
+        <div class="mx-auto my-7 h-px w-40 bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+        <p class="text-sm text-slate-500">Celebrating Joy-Frida Kendi · Pharmacy Graduate · USIU-Africa</p>
+      </div>
+    </section>
+
+
+    <footer class="bg-purple-50 px-5 py-8 text-center text-xs text-slate-500">
+      <p>Made with love for Joy-Frida's graduation celebration.</p>
+      <p class="mt-1">3 October 2026 · Membley Pavilion E23 · 1:00 PM</p>
+    </footer>
+  </div>
+
+
+
+  <button id="music-toggle" aria-label="Toggle music" class="fixed bottom-5 right-5 z-40 hidden items-center justify-center rounded-full">
+    <span class="music-ring"></span>
+    <span class="material-symbols-outlined icon-fill" id="music-icon">music_note</span>
+  </button>
+
+
+
+  <div id="lightbox" class="fixed inset-0 z-[90] hidden items-center justify-center bg-black/80 p-5 backdrop-blur-sm">
+    <button id="lightbox-close" class="absolute right-5 top-5 rounded-full bg-white/10 px-4 py-2 text-white">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+    <img id="lightbox-image" src="" alt="Gallery image" class="max-h-[80vh] max-w-[95vw] rounded-2xl shadow-2xl">
+    <a id="lightbox-download" class="lightbox-download absolute bottom-6 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-purple-900 shadow-xl" href="#" download>
+      <span class="material-symbols-outlined" style="font-size:18px;">download</span>Save photo
+    </a>
+  </div>
+
+
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
