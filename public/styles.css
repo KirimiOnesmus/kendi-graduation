@@ -22,6 +22,11 @@ body {
   overflow-x: hidden;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 .script {
   font-family: "Great Vibes", cursive;
 }
@@ -677,7 +682,11 @@ body {
 
 .memory-map {
   position: relative;
-  min-height: 760px;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 1rem;
+  row-gap: 3.5rem;
+  align-items: start;
 }
 
 .memory-path {
@@ -701,9 +710,10 @@ body {
 }
 
 .memory-spot {
-  position: absolute;
+  position: relative;
   z-index: 1;
-  width: min(220px, 40vw);
+  width: 100%;
+  max-width: 230px;
 }
 
 .memory-card {
@@ -730,10 +740,13 @@ body {
   position: relative;
   overflow: hidden;
   background: var(--purple-100);
+  width: 100%;
 }
 
 .memory-img-wrap img {
   width: 100%;
+  max-width: 100%;
+  height: auto;
   aspect-ratio: 3 / 4;
   object-fit: cover;
   display: block;
@@ -753,6 +766,8 @@ body {
 
 .memory-number {
   position: absolute;
+  right: -8px;
+  bottom: 42px;
   width: 26px;
   height: 26px;
   display: grid;
@@ -774,32 +789,48 @@ body {
   text-align: center;
 }
 
-.memory-spot.m1 { left: 3%; top: 2%; }
+.memory-spot.m1 {
+  grid-column: 1 / 4;
+  justify-self: start;
+}
 .memory-spot.m1 .memory-card { transform: rotate(-6deg); }
-.memory-spot.m1 .memory-number { right: -8px; bottom: 38px; }
 .memory-spot.m1 .memory-caption { text-align: left; padding-left: 6px; }
 
-.memory-spot.m2 { left: 36%; top: 1%; width: min(210px, 36vw); }
+.memory-spot.m2 {
+  grid-column: 5 / 9;
+  justify-self: center;
+  margin-top: 0.4rem;
+  max-width: 210px;
+}
 .memory-spot.m2 .memory-card { transform: rotate(5deg); }
-.memory-spot.m2 .memory-number { right: -8px; bottom: 36px; }
 
-.memory-spot.m3 { left: 5%; top: 52%; width: min(200px, 36vw); }
+.memory-spot.m3 {
+  grid-column: 1 / 4;
+  justify-self: start;
+  max-width: 200px;
+}
 .memory-spot.m3 .memory-card { transform: rotate(3deg); }
-.memory-spot.m3 .memory-number { right: -6px; bottom: 36px; }
 .memory-spot.m3 .memory-caption { text-align: left; }
 
-.memory-spot.m4 { left: 34%; top: 47%; width: min(215px, 38vw); }
+.memory-spot.m4 {
+  grid-column: 4 / 8;
+  justify-self: center;
+  max-width: 215px;
+}
 .memory-spot.m4 .memory-card { transform: rotate(-3deg); }
-.memory-spot.m4 .memory-number { right: -8px; bottom: 36px; }
 
-.memory-spot.m5 { left: 58%; top: 36%; width: min(230px, 40vw); }
+.memory-spot.m5 {
+  grid-column: 8 / 11;
+  justify-self: center;
+  max-width: 230px;
+}
 .memory-spot.m5 .memory-card { transform: rotate(4deg); }
-.memory-spot.m5 .memory-number { right: -6px; bottom: 36px; }
 
 .next-memory {
-  position: absolute;
-  right: 1%;
-  top: 42%;
+  position: relative;
+  grid-column: 11 / 13;
+  justify-self: center;
+  align-self: center;
   z-index: 1;
   width: 122px;
   height: 122px;
@@ -1362,24 +1393,22 @@ body {
 
 @media (max-width: 899px) {
   .memory-map {
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2.6rem;
-    padding: 1rem 0 0.5rem;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: 2.6rem;
   }
 
-  .memory-spot {
-    position: relative;
-    left: auto !important;
-    top: auto !important;
-    width: min(250px, 82vw);
-  }
-
-  .memory-spot .memory-number {
-    right: -6px;
-    bottom: 38px;
+  .memory-spot,
+  .memory-spot.m1,
+  .memory-spot.m2,
+  .memory-spot.m3,
+  .memory-spot.m4,
+  .memory-spot.m5,
+  .next-memory {
+    grid-column: 1;
+    justify-self: center;
+    margin-top: 0;
+    max-width: min(250px, 82vw);
   }
 
   .memory-spot.m1 .memory-card { transform: rotate(-4deg); }
@@ -1387,12 +1416,6 @@ body {
   .memory-spot.m3 .memory-card { transform: rotate(-2deg); }
   .memory-spot.m4 .memory-card { transform: rotate(2deg); }
   .memory-spot.m5 .memory-card { transform: rotate(-3deg); }
-
-  .next-memory {
-    position: relative;
-    right: auto;
-    top: auto;
-  }
 }
 
 @media (max-width: 700px) {

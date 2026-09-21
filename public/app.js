@@ -529,7 +529,7 @@ function startMusicIfAvailable() {
       musicIcon.textContent = "music_note";
     })
     .catch(() => {
-      // Autoplay blocked — reveal the toggle so the guest can start it manually.
+
       musicToggle.classList.remove("hidden");
       musicToggle.classList.add("flex");
     });

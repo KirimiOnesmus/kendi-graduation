@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#35105f">
   <meta name="description" content="Dr. Joy-Frida Kendi Kirimi — Pharmacy Graduation Celebration, USIU-Africa.">
+  <link rel="icon" type="image/svg+xml" href="./assets/graduation-hat.svg" />
   <title>Dr. Joy-Frida Kendi Kirimi - Graduation Celebration</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -35,12 +36,31 @@
       }
     }
   </script>
+   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260921">
+  <style>
+    .memory-map { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2.5rem 1rem; position: relative; }
+    .memory-spot { position: relative; z-index: 1; width: 100%; max-width: 230px; }
+    .memory-spot.m1 { grid-column: 1 / 4; }
+    .memory-spot.m2 { grid-column: 5 / 9; justify-self: center; max-width: 210px; }
+    .memory-spot.m3 { grid-column: 1 / 4; }
+    .memory-spot.m4 { grid-column: 4 / 8; justify-self: center; }
+    .memory-spot.m5 { grid-column: 8 / 11; justify-self: center; }
+    .next-memory { grid-column: 11 / 13; justify-self: center; align-self: center; }
+    .memory-img-wrap img { width: 100%; max-width: 100%; height: auto; display: block; object-fit: cover; }
+    .memory-lane-head { text-align: center; }
+    @media (max-width: 899px) {
+      .memory-map { grid-template-columns: 1fr; justify-items: center; }
+      .memory-spot, .memory-spot.m1, .memory-spot.m2, .memory-spot.m3, .memory-spot.m4, .memory-spot.m5, .next-memory {
+        grid-column: 1; justify-self: center; max-width: min(250px, 82vw);
+      }
+    }
+  </style>
 </head>
 
 <body class="bg-purple-50 text-slate-900 antialiased">
@@ -283,17 +303,17 @@
             <div class="icon-shell"><span class="material-symbols-outlined">location_on</span></div>
             <h3>Venue</h3>
             <p><strong>Membley Pavilion E23</strong></p>
-            <a id="maps-link" href="https://www.google.com/maps/search/?api=1&query=Membley+Pavilion+E23+Kenya" target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-purple-800 underline underline-offset-4">
+            <a id="maps-link" href="https://maps.app.goo.gl/eU1s5ooRZaBQPHGg7" target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-purple-800 underline underline-offset-4">
               <span class="material-symbols-outlined" style="font-size:15px;">near_me</span>Get Directions
             </a>
           </article>
         </div>
 
         <div class="mt-10 flex flex-wrap items-center justify-center gap-3 reveal">
-          <button type="button" data-download-ics class="calendar-action">
+          <!-- <button type="button" data-download-ics class="calendar-action">
             <span class="material-symbols-outlined">event_available</span>
             Add to Calendar
-          </button>
+          </button> -->
           <a data-google-calendar href="#" target="_blank" rel="noopener" class="calendar-action calendar-action-ghost">
             <span class="material-symbols-outlined">calendar_month</span>
             Google Calendar
@@ -327,10 +347,10 @@
             <div class="icon-shell"><span class="material-symbols-outlined">redeem</span></div>
             <h3>A Contribution</h3>
             <p>Send a gift via M-Pesa toward her next chapter.</p>
-            <!-- Replace the number below with the M-Pesa number before sharing the invite -->
+         
             <p class="gift-pay-name">Dr. Joy-Frida Kendi Kirimi</p>
-            <button type="button" class="copy-chip" data-copy="0700000000" data-copy-label="M-Pesa number" id="copy-mpesa">
-              <span class="copy-value">0700 000 000</span>
+            <button type="button" class="copy-chip" data-copy="0711734966" data-copy-label="M-Pesa number" id="copy-mpesa">
+              <span class="copy-value">0711734966</span>
               <span class="copy-action">Copy</span>
             </button>
           </article>
@@ -347,7 +367,7 @@
 
     <section id="gallery" class="memory-lane px-5 py-24">
       <div class="memory-wrap">
-        <header class="memory-lane-head reveal">
+        <header class="memory-lane-head">
           <p class="memory-kicker">Memories</p>
           <h2 class="font-display">Memory Lane</h2>
           <p class="script memory-subtitle">From the early years to the journey ahead</p>
@@ -361,7 +381,7 @@
             <div class="memory-card">
               <span class="tape"></span>
               <div class="memory-img-wrap" aria-label="Memory photo 1">
-                <img src="assets/1.jpeg" alt="Where the journey began" draggable="false">
+                <img src="assets/1.jpeg" alt="Where the journey began" draggable="false" width="400" height="520">
                 <div class="memory-shield" aria-hidden="true"></div>
               </div>
             </div>
@@ -373,7 +393,7 @@
             <div class="memory-card">
               <span class="tape"></span>
               <div class="memory-img-wrap landscape" aria-label="Memory photo 2">
-                <img src="assets/2.jpeg" alt="Growing, learning, dreaming" draggable="false">
+                <img src="assets/2.jpeg" alt="Growing, learning, dreaming" draggable="false" width="400" height="320">
                 <div class="memory-shield" aria-hidden="true"></div>
               </div>
             </div>
@@ -385,7 +405,7 @@
             <div class="memory-card">
               <span class="tape"></span>
               <div class="memory-img-wrap" aria-label="Memory photo 3">
-                <img src="assets/3.jpeg" alt="A milestone along the way" draggable="false">
+                <img src="assets/3.jpeg" alt="A milestone along the way" draggable="false" width="400" height="520">
                 <div class="memory-shield" aria-hidden="true"></div>
               </div>
             </div>
@@ -397,7 +417,7 @@
             <div class="memory-card">
               <span class="tape"></span>
               <div class="memory-img-wrap landscape" aria-label="Memory photo 4">
-                <img src="assets/4.jpeg" alt="Celebrating the journey" draggable="false">
+                <img src="assets/4.jpeg" alt="Celebrating the journey" draggable="false" width="400" height="320">
                 <div class="memory-shield" aria-hidden="true"></div>
               </div>
             </div>
@@ -409,7 +429,7 @@
             <div class="memory-card">
               <span class="tape"></span>
               <div class="memory-img-wrap" aria-label="Memory photo 5">
-                <img src="assets/5.jpeg" alt="Proud and ready for the future" draggable="false">
+                <img src="assets/5.jpeg" alt="Proud and ready for the future" draggable="false" width="400" height="520">
                 <div class="memory-shield" aria-hidden="true"></div>
               </div>
             </div>
@@ -454,7 +474,7 @@
       <div class="absolute -left-24 top-0 h-72 w-72 rounded-full bg-purple-700/30 blur-3xl"></div>
       <div class="absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-purple-500/20 blur-3xl"></div>
 
-      <div class="relative mx-auto max-w-lg">
+      <div class="relative mx-auto max-w-xl">
         <div class="rsvp-panel reveal">
           <div class="rsvp-panel-head">
             <p class="text-[10px] font-semibold uppercase tracking-[.32em] text-purple-700">Your presence matters</p>
@@ -553,7 +573,7 @@
           <div class="rsvp-whatsapp">
             <p>Prefer WhatsApp?</p>
             <a id="whatsapp-link"
-               href="https://wa.me/254700000000?text=Hello%20Dr.%20Joy-Frida%2C%20I%27d%20like%20to%20RSVP%20for%20your%20graduation%20celebration%20on%203%20October%202026."
+               href="https://wa.me/254796161027?text=Hello%20Dr.%20Joy-Frida%2C%20I%27d%20like%20to%20RSVP%20for%20your%20graduation%20celebration%20on%203%20October%202026."
                target="_blank" rel="noopener">
               <span class="material-symbols-outlined" style="font-size:18px;">chat_bubble</span>RSVP via WhatsApp
             </a>
@@ -575,8 +595,8 @@
 
 
     <footer class="bg-purple-50 px-5 py-8 text-center text-xs text-slate-500">
-      <p>Made for Dr. Joy-Frida Kendi Kirimi's graduation celebration.</p>
-      <p class="mt-1">3 October 2026 · Membley Pavilion E23 · 1:00 PM</p>
+      <p>Made for Dr. Joy-Frida Kendi's graduation celebration.</p>
+      <p class="mt-1">3 October 2026  Membley Pavilion E23  1:00 PM</p>
     </footer>
   </div>
 
