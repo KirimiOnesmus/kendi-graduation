@@ -217,6 +217,76 @@ document.querySelectorAll("[data-download-file]").forEach((button) => {
 });
 
 
+function drawMemoryPath() {
+  const map = document.querySelector(".memory-map");
+  const svg = document.getElementById("memory-path");
+  if (!map || !svg) return;
+
+  const width = map.clientWidth;
+  const height = map.clientHeight;
+  if (width < 40 || height < 40) return;
+
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  svg.setAttribute("width", String(width));
+  svg.setAttribute("height", String(height));
+
+  const mapBox = map.getBoundingClientRect();
+  const pointFor = (selector) => {
+    const host = map.querySelector(selector);
+    if (!host) return null;
+    const node = host.matches("[data-node]") ? host : host.querySelector("[data-node]");
+    const el = node || host;
+    const box = el.getBoundingClientRect();
+    return {
+      x: box.left - mapBox.left + box.width / 2,
+      y: box.top - mapBox.top + box.height / 2
+    };
+  };
+
+  const curve = (from, to, sway) => {
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    const dist = Math.hypot(dx, dy) || 1;
+    const nx = -dy / dist;
+    const ny = dx / dist;
+    const bulge = dist * 0.38 * sway;
+    const c1x = from.x + dx * 0.28 + nx * bulge;
+    const c1y = from.y + dy * 0.18 + ny * bulge;
+    const c2x = from.x + dx * 0.72 - nx * bulge * 0.7;
+    const c2y = from.y + dy * 0.82 - ny * bulge * 0.7;
+    return `M ${from.x.toFixed(1)} ${from.y.toFixed(1)} C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${to.x.toFixed(1)} ${to.y.toFixed(1)}`;
+  };
+
+  const links = [
+    [".m1", ".m2", 1],
+    [".m1", ".m3", -1],
+    [".m3", ".m4", 1],
+    [".m4", ".m5", -1],
+    [".m5", ".next-memory", 1]
+  ];
+
+  svg.innerHTML = links.map(([start, end, sway], index) => {
+    const a = pointFor(start);
+    const b = pointFor(end);
+    if (!a || !b) return "";
+    const bend = index % 2 === 0 ? sway : -sway;
+    return `<path d="${curve(a, b, bend)}" />`;
+  }).join("");
+}
+
+const memoryMap = document.querySelector(".memory-map");
+if (memoryMap) {
+  const redraw = () => requestAnimationFrame(drawMemoryPath);
+  window.addEventListener("resize", redraw);
+  window.addEventListener("load", redraw);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(redraw);
+  Array.from(memoryMap.querySelectorAll("img")).forEach((img) => {
+    if (!img.complete) img.addEventListener("load", redraw, { once: true });
+  });
+  redraw();
+}
+
+
 /*
    RSVP FORM
  */
