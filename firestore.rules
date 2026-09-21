@@ -27,7 +27,7 @@ service cloud.firestore {
         && request.resource.data.guests is string
         && request.resource.data.message is string
         && request.resource.data.message.size() <= 500
-        && request.resource.data.event == 'Joy-Frida Kendi Graduation Celebration 2026';
+        && request.resource.data.event == 'Dr. Joy-Frida Kendi Kirimi Graduation Celebration 2026';
 
       allow read, update, delete: if false;
     }

@@ -33,16 +33,21 @@ let db = null;
 // album" link and shown if the embedded grid ever fails to load.
 const GALLERY_ALBUM_LINK = "https://photos.app.goo.gl/REPLACE_ME";
 const galleryAlbumLink = document.getElementById("gallery-album-link");
-if (galleryAlbumLink) galleryAlbumLink.href = GALLERY_ALBUM_LINK;
+if (galleryAlbumLink) {
+  if (GALLERY_ALBUM_LINK.includes("REPLACE_ME")) {
+    galleryAlbumLink.hidden = true;
+  } else {
+    galleryAlbumLink.href = GALLERY_ALBUM_LINK;
+  }
+}
 
 
 const EVENT = {
-  title: "Joy-Frida Kendi's Graduation Celebration",
-  
+  title: "Dr. Joy-Frida Kendi Kirimi's Graduation Celebration",
   start: new Date("2026-10-03T13:00:00+03:00"),
   end: new Date("2026-10-03T16:00:00+03:00"),
   location: "Membley Pavilion E23, Kenya",
-  description: "Join us as we celebrate Joy-Frida Kendi's Pharmacy graduation from USIU-Africa."
+  description: "Join us as we celebrate Dr. Joy-Frida Kendi Kirimi's Pharmacy graduation from USIU-Africa."
 };
 
 
@@ -151,7 +156,21 @@ const lightboxImage = document.getElementById("lightbox-image");
 const lightboxClose = document.getElementById("lightbox-close");
 const lightboxDownload = document.getElementById("lightbox-download");
 
-document.getElementById("photos-grid").addEventListener("click", (event) => {
+document.getElementById("photos-grid")?.addEventListener("contextmenu", (event) => {
+  event.preventDefault();
+});
+
+document.getElementById("photos-grid")?.addEventListener("dragstart", (event) => {
+  event.preventDefault();
+});
+
+function closeLightbox() {
+  lightbox.classList.add("hidden");
+  lightbox.classList.remove("flex");
+  document.body.style.overflow = "";
+}
+
+document.addEventListener("click", (event) => {
   const trigger = event.target.closest("[data-gallery]");
   if (!trigger) return;
 
@@ -165,67 +184,11 @@ document.getElementById("photos-grid").addEventListener("click", (event) => {
   lightbox.classList.add("flex");
   document.body.style.overflow = "hidden";
 });
-
-function closeLightbox() {
-  lightbox.classList.add("hidden");
-  lightbox.classList.remove("flex");
-  document.body.style.overflow = "";
-}
-
 lightboxClose.addEventListener("click", closeLightbox);
 lightbox.addEventListener("click", (event) => {
   if (event.target === lightbox) closeLightbox();
 });
 
-
-/* 
-   PARTY PHOTOS 
- */
-const photosGrid = document.getElementById("photos-grid");
-const photosState = document.getElementById("photos-state");
-
-function setPhotosState(mode) {
-  if (mode === "loading") {
-    photosState.innerHTML = `<div class="spin-loader"></div><p class="text-sm">Loading party photos…</p>`;
-    photosState.classList.remove("hidden");
-  } else if (mode === "empty") {
-    photosState.innerHTML = `
-      <span class="material-symbols-outlined">photo_camera</span>
-      <p class="text-sm">Party photos will appear here after the celebration.<br>Check back soon!</p>
-    `;
-    photosState.classList.remove("hidden");
-  } else if (mode === "error") {
-    photosState.innerHTML = `
-      <span class="material-symbols-outlined">cloud_off</span>
-      <p class="text-sm">Couldn't load the photo grid right now.<br>
-      <a href="${GALLERY_ALBUM_LINK}" target="_blank" rel="noopener" class="underline font-semibold">View the album on Google Photos instead</a>.</p>
-    `;
-    photosState.classList.remove("hidden");
-  } else {
-    photosState.classList.add("hidden");
-  }
-}
-
-function buildPhotoCard({ url, downloadUrl, name }) {
-  const card = document.createElement("div");
-  card.className = "photo-card reveal";
-  const filename = `${name || "photo"}.jpg`;
-  const fullUrl = downloadUrl || url;
-
-  card.innerHTML = `
-    <span class="tape"></span>
-    <button class="photo-open" data-gallery="${fullUrl}" data-download="${fullUrl}" data-filename="${filename}" aria-label="Open photo">
-      <img src="${url}" alt="Graduation celebration photo" loading="lazy">
-    </button>
-    <button class="photo-download" type="button" aria-label="Download photo">
-      <span class="material-symbols-outlined">download</span>
-    </button>
-  `;
-
-  card.querySelector(".photo-download").addEventListener("click", () => downloadImage(fullUrl, filename));
-
-  return card;
-}
 
 async function downloadImage(url, filename) {
   try {
@@ -247,41 +210,11 @@ async function downloadImage(url, filename) {
   }
 }
 
-async function loadGallery() {
-  setPhotosState("loading");
-
-  try {
-    const response = await fetch("/api/gallery");
-    if (!response.ok) throw new Error(`Gallery endpoint returned HTTP ${response.status}`);
-
-    const { photos, stale } = await response.json();
-
-    if (!photos || photos.length === 0) {
-      setPhotosState("empty");
-      return;
-    }
-
-    const fragment = document.createDocumentFragment();
-    photos.forEach(photo =>
-      fragment.appendChild(
-        buildPhotoCard({ url: photo.thumbUrl, downloadUrl: photo.fullUrl, name: photo.id })
-      )
-    );
-    photosGrid.appendChild(fragment);
-
-    setPhotosState("none");
-    observeReveals(photosGrid);
-
-    if (stale) {
-      console.warn("Showing a cached copy of the album — the latest live fetch failed.");
-    }
-  } catch (error) {
-    console.error("Could not load party photos from Google Photos:", error);
-    setPhotosState("error");
-  }
-}
-
-loadGallery();
+document.querySelectorAll("[data-download-file]").forEach((button) => {
+  button.addEventListener("click", () => {
+    downloadImage(button.dataset.downloadFile, button.dataset.filename || "invitation.jpg");
+  });
+});
 
 
 /*
@@ -306,7 +239,7 @@ rsvpForm.addEventListener("submit", async (event) => {
     guests: attendance === "no" ? "0" : guests,
     message: document.getElementById("message").value.trim(),
     submittedAt: serverTimestamp(),
-    event: "Joy-Frida Kendi Graduation Celebration 2026"
+    event: "Dr. Joy-Frida Kendi Kirimi Graduation Celebration 2026"
   };
 
   if (!data.name || !data.phone) {
@@ -404,7 +337,7 @@ function buildIcsFile() {
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Joy-Frida Kendi//Graduation Celebration//EN",
+    "PRODID:-//Dr. Joy-Frida Kendi Kirimi//Graduation Celebration//EN",
     "CALSCALE:GREGORIAN",
     "BEGIN:VEVENT",
     `UID:${uid}`,
@@ -416,7 +349,7 @@ function buildIcsFile() {
     `LOCATION:${EVENT.location}`,
     "BEGIN:VALARM",
     "ACTION:DISPLAY",
-    "DESCRIPTION:Reminder — Joy-Frida's graduation celebration is tomorrow!",
+    "DESCRIPTION:Reminder — Dr. Joy-Frida's graduation celebration is tomorrow!",
     "TRIGGER:-P1D",
     "END:VALARM",
     "END:VEVENT",
