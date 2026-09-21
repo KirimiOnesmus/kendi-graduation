@@ -28,9 +28,7 @@ let db = null;
   }
 })();
 
-// Paste the album's public "Share" link here (Google Photos > your
-// album > Share > Create link). Used as the fallback "view full
-// album" link and shown if the embedded grid ever fails to load.
+
 const GALLERY_ALBUM_LINK = "https://photos.app.goo.gl/REPLACE_ME";
 const galleryAlbumLink = document.getElementById("gallery-album-link");
 if (galleryAlbumLink) {
@@ -324,7 +322,7 @@ rsvpForm.addEventListener("submit", async (event) => {
 
   if (!db) {
     rsvpStatus.innerHTML =
-      "The RSVP form is designed and ready. Firebase is not connected yet — add your Firebase configuration in <strong>firebase-config.js</strong>.";
+      "The RSVP form is designed and ready. Firebase is not connected yet add your Firebase configuration in <strong>firebase-config.js</strong>.";
     return;
   }
 
@@ -339,7 +337,7 @@ rsvpForm.addEventListener("submit", async (event) => {
       showRsvpSuccess(data.name);
     } else {
       rsvpForm.reset();
-      rsvpStatus.textContent = "Thank you for letting us know — you'll be missed!";
+      rsvpStatus.textContent = "Thank you for letting us know, you'll be missed!";
       rsvpSubmit.disabled = false;
       rsvpSubmit.textContent = "Send RSVP";
     }
@@ -419,7 +417,7 @@ function buildIcsFile() {
     `LOCATION:${EVENT.location}`,
     "BEGIN:VALARM",
     "ACTION:DISPLAY",
-    "DESCRIPTION:Reminder — Dr. Joy-Frida's graduation celebration is tomorrow!",
+    "DESCRIPTION:Reminder — Dr. Joy's graduation celebration is tomorrow!",
     "TRIGGER:-P1D",
     "END:VALARM",
     "END:VEVENT",

@@ -2,13 +2,12 @@
   "name": "kendi-functions",
   "version": "1.0.0",
   "main": "index.js",
-  "private": true,
-  "engines": {
-    "node": "18"
-  },
   "dependencies": {
-    "firebase-admin": "^12.0.0",
-    "firebase-functions": "^4.0.0",
+    "firebase-admin": "^14.4.0",
+    "firebase-functions": "^7.4.0",
     "node-fetch": "^2.7.0"
+  },
+  "engines": {
+    "node": "22"
   }
 }
